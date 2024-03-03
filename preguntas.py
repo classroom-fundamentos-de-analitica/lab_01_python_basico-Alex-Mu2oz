@@ -12,7 +12,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
+import csv  # Librería para leer archivos CSV   
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -21,7 +21,13 @@ def pregunta_01():
     214
 
     """
-    return
+    suma = 0
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            suma += int(row[1])
+    return suma
+   
 
 
 def pregunta_02():
@@ -39,7 +45,15 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        letras = [row[0] for row in reader]
+        letras = sorted(letras)
+        letras_unicas = list(set(letras))
+        cantidad = []
+        for letra in letras_unicas:
+            cantidad.append((letra, letras.count(letra)))
+    return cantidad
 
 
 def pregunta_03():
@@ -57,8 +71,17 @@ def pregunta_03():
     ]
 
     """
-    return
-
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        letras = [row[0] for row in reader]
+        file.seek(0)
+        valores = [int(row[1]) for row in reader]
+        letras_unicas = list(set(letras))
+        suma = []
+        for letra in letras_unicas:
+            suma.append((letra, sum([valores[i] for i in range(len(letras)) if letras[i] == letra])))
+    return suma
+    
 
 def pregunta_04():
     """
@@ -82,7 +105,15 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        fechas = [row[2] for row in reader]
+        meses = [fecha[5:7] for fecha in fechas]
+        meses_unicos = list(set(meses))
+        cantidad = []
+        for mes in meses_unicos:
+            cantidad.append((mes, meses.count(mes)))
+    return cantidad
 
 
 def pregunta_05():
@@ -100,7 +131,17 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        letras = [row[0] for row in reader]
+        file.seek(0)
+        valores = [int(row[1]) for row in reader]
+        letras_unicas = list(set(letras))
+        max_min = []
+        for letra in letras_unicas:
+            max_min.append((letra, max([valores[i] for i in range(len(letras)) if letras[i] == letra]), min([valores[i] for i in range(len(letras)) if letras[i] == letra])))
+    return max_min
+    
 
 
 def pregunta_06():
@@ -125,7 +166,18 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        claves = [row[4] for row in reader]
+        claves = [clave.split(":") for clave in claves]
+        claves_unicas = list(set([clave[0] for clave in claves]))
+        valores = [int(clave[1]) for clave in claves]
+        max_min = []
+        for clave in claves_unicas:
+            valores_clave = [int(clave[1]) for clave in claves if clave[0] == clave]
+            max_min.append((clave, min(valores_clave), max(valores_clave)))
+    return max_min
+
 
 
 def pregunta_07():
@@ -149,6 +201,7 @@ def pregunta_07():
     ]
 
     """
+    
     return
 
 
@@ -220,7 +273,7 @@ def pregunta_10():
     """
     return
 
-
+import csv  # Librería para leer archivos CSV
 def pregunta_11():
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada letra de la
