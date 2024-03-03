@@ -199,10 +199,19 @@ def pregunta_07():
         (8, ["E", "D", "E", "A", "B"]),
         (9, ["A", "B", "E", "A", "A", "C"]),
     ]
-
     """
-    
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        column0 = [int(row[0]) for row in reader]
+        file.seek(0)
+        column1 = [row[1] for row in reader]
+        unique_values = list(set(column0))
+        result = []
+        for value in unique_values:
+            associated_letters = [column1[i] for i in range(len(column0)) if column0[i] == value]
+            result.append((value, associated_letters))
+    return result
+
 
 
 def pregunta_08():
@@ -227,7 +236,17 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        column1 = [int(row[1]) for row in reader]
+        file.seek(0)
+        column0 = [row[0] for row in reader]
+        unique_values = list(set(column1))
+        result = []
+        for value in unique_values:
+            associated_letters = sorted(list(set([column0[i] for i in range(len(column1)) if column1[i] == value])))
+            result.append((value, associated_letters))
+    return result
 
 
 def pregunta_09():
@@ -250,7 +269,16 @@ def pregunta_09():
     }
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        claves = [row[4] for row in reader]
+        claves = [clave.split(":")[0] for clave in claves]
+        claves_unicas = list(set(claves))
+        cantidad = {}
+        for clave in claves_unicas:
+            cantidad[clave] = claves.count(clave)
+    return cantidad
+    
 
 
 def pregunta_10():
@@ -271,7 +299,18 @@ def pregunta_10():
 
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        column0 = [row[0] for row in reader]
+        file.seek(0)
+        column4 = [row[3] for row in reader]
+        file.seek(0)
+        column5 = [row[4] for row in reader]
+        result = []
+        for i in range(len(column0)):
+            result.append((column0[i], len(column4[i]), len(column5[i].split(":"))))
+    return result
+    
 
 import csv  # Librería para leer archivos CSV
 def pregunta_11():
@@ -292,7 +331,17 @@ def pregunta_11():
 
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        column3 = [row[3] for row in reader]
+        file.seek(0)
+        column1 = [int(row[1]) for row in reader]
+        unique_values = list(set(column3))
+        result = {}
+        for value in unique_values:
+            result[value] = sum([column1[i] for i in range(len(column3)) if column3[i] == value])
+    return result
+    
 
 
 def pregunta_12():
@@ -310,4 +359,12 @@ def pregunta_12():
     }
 
     """
-    return
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        column0 = [row[0] for row in reader]
+        file.seek(0)
+        column4 = [row[3] for row in reader]
+        result = {}
+        for value in list(set(column0)):
+            result[value] = sum([len(column4[i].split(":")) for i in range(len(column0)) if column0[i] == value])
+    return result
